@@ -73,6 +73,7 @@ int count(const int & a, const int & b, const char & el) {
     case '/':
       return a / b;
   }
+  return 0;
 }
 
 int eval(std::string pref) {
