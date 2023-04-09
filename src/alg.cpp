@@ -40,9 +40,10 @@ std::string infx2pstfx(std::string inf) {
             postf += sm;
             postf += ' ';
             stack.pop();
-            sm = stack.get();}
-          stack.pop();
-        } else {
+            sm = stack.get();
+          }
+          stack.pop();} 
+        else {
             char sm = stack.get();
             while (getPrior(sm) >= prior) {
               postf += sm;
