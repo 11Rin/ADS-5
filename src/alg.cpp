@@ -26,10 +26,14 @@ std::string infx2pstfx(std::string inf) {
   TStack<char, 100> stack;
   for (auto & symbol : inf) {
     int prior = getPrior(symbol);
-    if (prior == -1) postf += symbol;
-    else {
-      if (stack.get() < prior || prior == 0 || stack.isEmpty()) stack.push(symbol);
-      else if (symbol == ')') {
+    if (prior == -1)
+      postf += symbol;
+    else 
+    {
+      if (stack.get() < prior || prior == 0 || stack.isEmpty())
+        stack.push(symbol);
+      else if (symbol == ')') 
+      {
         char sm = stack.get();
         while (getPrior(sm) >= prior) {
           postf += sm;
@@ -52,7 +56,7 @@ std::string infx2pstfx(std::string inf) {
     postf += stack.get();
     stack.pop();
   }
-  return std::string("postf");
+  return postf;
 }
 
 int count(const int & a, const int & b, const char & el) {
