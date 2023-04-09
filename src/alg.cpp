@@ -42,7 +42,8 @@ std::string infx2pstfx(std::string inf) {
             stack.pop();
             sm = stack.get();
           }
-          stack.pop();} 
+          stack.pop();
+        }
         else {
             char sm = stack.get();
             while (getPrior(sm) >= prior) {
