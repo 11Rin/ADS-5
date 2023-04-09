@@ -39,8 +39,7 @@ std::string infx2pstfx(std::string inf) {
           sm = stack.get();
         }
         stack.pop();
-      } else
-        {
+      } else {
           char sm = stack.get();
           while (getPrior(sm) >= prior) {
             postf += sm;
@@ -48,15 +47,14 @@ std::string infx2pstfx(std::string inf) {
             sm = stack.get();
           }
           stack.push(symbol);
-      }
+        }
     }
   }
   while (!stack.isEmpty()) {
     postf += stack.get();
     stack.pop();
   }
-  return postf;
-  return std::string("");
+  return std::string("postf");
 }
 
 int count(const int & a, const int & b, const char & el) {
@@ -82,14 +80,13 @@ int eval(std::string pref) {
       k[1] = '\0';
       int r = atoi(k);
       stack.push(r);
-    } else
-      {
+    } else {
         int b = stack.get();
         stack.pop();
         int a = stack.get();
         stack.pop();
         stack.push(count(a, b, el));
-    }
+      }
   }
   return stack.get();
 }
