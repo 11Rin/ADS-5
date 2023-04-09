@@ -2,7 +2,7 @@
 #include <string>
 #include <map>
 #include "tstack.h"
-
+const int size = 100;
 int getPrior(char ch) {
   switch (ch) {
     case '(':
@@ -25,7 +25,7 @@ int getPrior(char ch) {
 
 std::string infx2pstfx(std::string inf) {
   std::string postf;
-  TStack<char, 100> stack;
+  TStack<char, size> stack;
   for (auto & symbol : inf) {
     int prior = getPrior(symbol);
     if (prior == -1) {
@@ -34,7 +34,8 @@ std::string infx2pstfx(std::string inf) {
     } else {
         if (stack.get() < prior || prior == 0 || stack.isEmpty())
           stack.push(symbol);
-        else if (symbol == ')') {
+        else if (symbol == ')') 
+        {
           char sm = stack.get();
           while (getPrior(sm) >= prior) {
             postf += sm;
@@ -79,7 +80,7 @@ int count(const int & a, const int & b, const char & el) {
 }
 
 int eval(std::string pref) {
-  TStack<int, 100> stack;
+  TStack<int, size> stack;
   for (auto & el : pref) {
     if (getPrior(el) == 4) {
       continue;
