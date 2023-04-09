@@ -34,7 +34,7 @@ std::string infx2pstfx(std::string inf) {
     } else {
         if (stack.get() < prior || prior == 0 || stack.isEmpty()) {
           stack.push(symbol); }
-        else if (symbol == ')') {
+        if (symbol == ')') {
           char sm = stack.get();
           while (getPrior(sm) >= prior) {
             postf += sm;
