@@ -26,11 +26,9 @@ std::string infx2pstfx(std::string inf) {
   TStack<char, 100> stack;
   for (auto & symbol : inf) {
     int prior = getPrior(symbol);
-    if (prior == -1)
-      postf += symbol;
+    if (prior == -1) postf += symbol;
     else {
-      if (stack.get() < prior || prior == 0 || stack.isEmpty())
-        stack.push(symbol);
+      if (stack.get() < prior || prior == 0 || stack.isEmpty()) stack.push(symbol);
       else if (symbol == ')') {
         char sm = stack.get();
         while (getPrior(sm) >= prior) {
