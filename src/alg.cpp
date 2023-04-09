@@ -3,12 +3,96 @@
 #include <map>
 #include "tstack.h"
 
+int getPrior(char ch) {
+  switch (ch)
+  {
+    case '(':
+      return 0;
+    case ')':
+      return 1;
+    case '+':
+      return 2;
+    case '-':
+      return 2;
+    case '*':
+      return 3;
+    case '/':
+      return 3;
+  }
+  return -1;
+}
+
 std::string infx2pstfx(std::string inf) {
-  // добавьте код
+  std::string postf;
+  TStack<char,100> stack;
+  for (auto & symbol : inf) {
+    int prior = getPrior(symbol);
+    if (prior == -1)
+      postf += symbol;
+    else
+      if (stack.get() < prior || prior == 0 || stack.isEmpty())
+        stack.push(symbol);
+      else if (symbol == ')')
+      {
+        char sm = stack.get();
+        while (getPrior(sm) >= prior) {
+          postf += sm;
+          stack.pop();
+          sm = stack.get();
+        }
+        stack.pop();
+      }
+      else
+      {
+        char sm = stack.get();
+        while (getPrior(sm) >= prior) {
+          postf += sm;
+          stack.pop();
+          sm = stack.get();
+        }
+        stack.push(symbol);
+      }
+  }
+  while (!stack.isEmpty()) {
+    postf += stack.get();
+    stack.pop();
+  }
+  return postf;
   return std::string("");
 }
 
+int count(const int & a, const int & b, const char & el) {
+  switch (el)
+  {
+    case '+':
+      return a + b;
+    case '-':
+      return a - b;
+    case '*':
+      return a * b;
+    case '/':
+      return a / b;
+  }
+}
+
 int eval(std::string pref) {
-  // добавьте код
-  return 0;
+  TStack<int,100> stack;
+  for (auto & el : pref) {
+    if (getPrior(el) == -1) {
+      char k[2];
+      k[0] = el;
+      k[1] = '\0';
+      int r = atoi(k);
+      stack.push(r);
+    }
+    else
+    {
+      int b = stack.get();
+      stack.pop();
+      int a = stack.get();
+      stack.pop();
+      stack.push(count(a, b, el));
+    }
+  }
+  return stack.get();
 }
