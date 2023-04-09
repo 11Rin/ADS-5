@@ -4,8 +4,7 @@
 #include "tstack.h"
 
 int getPrior(char ch) {
-  switch (ch)
-  {
+  switch (ch) {
     case '(':
       return 0;
     case ')':
@@ -24,16 +23,15 @@ int getPrior(char ch) {
 
 std::string infx2pstfx(std::string inf) {
   std::string postf;
-  TStack<char,100> stack;
+  TStack<char, 100> stack;
   for (auto & symbol : inf) {
     int prior = getPrior(symbol);
     if (prior == -1)
       postf += symbol;
-    else
+    else {
       if (stack.get() < prior || prior == 0 || stack.isEmpty())
         stack.push(symbol);
-      else if (symbol == ')')
-      {
+      else if (symbol == ')') {
         char sm = stack.get();
         while (getPrior(sm) >= prior) {
           postf += sm;
@@ -41,17 +39,17 @@ std::string infx2pstfx(std::string inf) {
           sm = stack.get();
         }
         stack.pop();
+      } else
+        {
+          char sm = stack.get();
+          while (getPrior(sm) >= prior) {
+            postf += sm;
+            stack.pop();
+            sm = stack.get();
+          }
+          stack.push(symbol);
       }
-      else
-      {
-        char sm = stack.get();
-        while (getPrior(sm) >= prior) {
-          postf += sm;
-          stack.pop();
-          sm = stack.get();
-        }
-        stack.push(symbol);
-      }
+    }
   }
   while (!stack.isEmpty()) {
     postf += stack.get();
@@ -62,8 +60,7 @@ std::string infx2pstfx(std::string inf) {
 }
 
 int count(const int & a, const int & b, const char & el) {
-  switch (el)
-  {
+  switch (el) {
     case '+':
       return a + b;
     case '-':
@@ -77,7 +74,7 @@ int count(const int & a, const int & b, const char & el) {
 }
 
 int eval(std::string pref) {
-  TStack<int,100> stack;
+  TStack<int, 100> stack;
   for (auto & el : pref) {
     if (getPrior(el) == -1) {
       char k[2];
@@ -85,14 +82,13 @@ int eval(std::string pref) {
       k[1] = '\0';
       int r = atoi(k);
       stack.push(r);
-    }
-    else
-    {
-      int b = stack.get();
-      stack.pop();
-      int a = stack.get();
-      stack.pop();
-      stack.push(count(a, b, el));
+    } else
+      {
+        int b = stack.get();
+        stack.pop();
+        int a = stack.get();
+        stack.pop();
+        stack.push(count(a, b, el));
     }
   }
   return stack.get();
