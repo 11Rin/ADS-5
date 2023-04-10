@@ -5,7 +5,7 @@
 template<typename T, int size>
 class TStack {
  private:
-  T arr[size];
+  T arr[100];
   int top;
  public:
   TStack() :top(-1) { }
