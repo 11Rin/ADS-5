@@ -23,7 +23,7 @@ int getPrior(char ch) {
   return -1;
 }
 
-std::string infx2pstfx(std::string inf){
+std::string infx2pstfx(std::string inf) {
   std::string postf;
   TStack<char, size> stack;
   for (auto & symbol : inf) {
@@ -34,7 +34,8 @@ std::string infx2pstfx(std::string inf){
     } else {
         if (stack.get() < prior || prior == 0 || stack.isEmpty())
           stack.push(symbol);
-        else if (symbol == ')') {
+        else if (symbol == ')') 
+        {
           char sm = stack.get();
           while (getPrior(sm) >= prior) {
             postf += sm;
@@ -61,7 +62,7 @@ std::string infx2pstfx(std::string inf){
     stack.pop();
   }
   postf.pop_back();
-  return postf; 
+  return postf;
 }
 
 
@@ -92,13 +93,12 @@ int eval(std::string pref) {
       k[1] = '\0';
       int r = atoi(k);
       stack.push(r);
-    }
-    else {
-      int b = stack.get();
-      stack.pop();
-      int a = stack.get();
-      stack.pop();
-      stack.push(counter(a, b, el));
+    } else {
+        int b = stack.get();
+        stack.pop();
+        int a = stack.get();
+        stack.pop();
+        stack.push(counter(a, b, el));
     }
   }
   return stack.get();
