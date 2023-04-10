@@ -33,7 +33,8 @@ std::string infx2pstfx(std::string inf) {
       postf += ' ';
     } else {
         if (stack.get() < prior || prior == 0 || stack.isEmpty()) {
-          stack.push(symbol);}
+          stack.push(symbol);
+        }
         else if (symbol == ')') {
           char sm = stack.get();
           while (getPrior(sm) >= prior) {
