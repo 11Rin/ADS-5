@@ -23,18 +23,18 @@ int getPrior(char ch) {
   return -1;
 }
 
-std::string infx2pstfx(std::string inf) {
+std::string infx2pstfx(std::string inf){
   std::string postf;
-  TStack<char, 100> stack;
+  TStack<char, size> stack;
   for (auto & symbol : inf) {
     int prior = getPrior(symbol);
     if (prior == -1) {
       postf += symbol;
       postf += ' ';
     } else {
-        if (stack.get() < prior || prior == 0 || stack.isEmpty()) {
-          stack.push(symbol); }
-        if (symbol == ')') {
+        if (stack.get() < prior || prior == 0 || stack.isEmpty())
+          stack.push(symbol);
+        else if (symbol == ')') {
           char sm = stack.get();
           while (getPrior(sm) >= prior) {
             postf += sm;
@@ -61,25 +61,27 @@ std::string infx2pstfx(std::string inf) {
     stack.pop();
   }
   postf.pop_back();
-  return postf;
+  return postf; 
 }
 
-int count(const int & a, const int & b, const char & el) {
+
+int counter(const int& a, const int& b, const char& el) {
   switch (el) {
     case '+':
-      return a + b;
+        return a + b;
     case '-':
-      return a - b;
+        return a - b;
     case '*':
-      return a * b;
+        return a * b;
     case '/':
-      return a / b;
-  }
-  return 0;
+        return a / b;
+    }
+    return -1;
 }
 
+
 int eval(std::string pref) {
-  TStack<int, 100> stack;
+  TStack<int, size> stack;
   for (auto & el : pref) {
     if (getPrior(el) == 4) {
       continue;
@@ -90,13 +92,14 @@ int eval(std::string pref) {
       k[1] = '\0';
       int r = atoi(k);
       stack.push(r);
-    } else {
-        int b = stack.get();
-        stack.pop();
-        int a = stack.get();
-        stack.pop();
-        stack.push(count(a, b, el));
-      }
+    }
+    else {
+      int b = stack.get();
+      stack.pop();
+      int a = stack.get();
+      stack.pop();
+      stack.push(counter(a, b, el));
+    }
   }
   return stack.get();
 }
